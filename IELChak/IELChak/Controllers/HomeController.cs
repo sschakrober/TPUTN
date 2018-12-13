@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using IELChak.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IELChak.Controllers
 {
@@ -15,6 +16,7 @@ namespace IELChak.Controllers
             return View();
         }
 
+        [Authorize(Roles="Administrador")]
         public IActionResult About()
         {
             ViewData["Message"] = "Instituto de Entrenamiento laboral.";

@@ -24,17 +24,20 @@ namespace IELChak.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _roleManager = roleManager;
         }
 
         [TempData]
@@ -229,9 +232,44 @@ namespace IELChak.Controllers
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                    var xRol = await _roleManager.RoleExistsAsync("Administrador");
 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    _logger.LogInformation("User created a new account with password.");
+                    if(!xRol)
+                    {
+                        var role = new IdentityRole("Administrador");
+                        var res = await _roleManager.CreateAsync(role);
+
+                        if(res.Succeeded)
+                        {
+                            await _userManager.AddToRoleAsync(user, "Administrador");
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            _logger.LogInformation("user create a new account with password");
+                        }
+                    }
+
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, "Usuario");
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        _logger.LogInformation("user create a new account with password");
+                    }
+
+                    xRol = await _roleManager.RoleExistsAsync("Usuarios");
+                    if(!xRol)
+                    {
+                        var role = new IdentityRole();
+                        role.Name = "Usuarios";
+                        await _roleManager.CreateAsync(role);
+                    }
+
+                    xRol = await _roleManager.RoleExistsAsync("Asistente");
+                    if(!xRol)
+                    {
+                        var role = new IdentityRole();
+                        role.Name = "Asistente";
+                        await _roleManager.CreateAsync(role);
+                    }
+                    
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);
