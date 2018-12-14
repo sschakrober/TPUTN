@@ -1,4 +1,4 @@
-@model IEnumerable<IELChak.Models.ApplicationUser>
+@model IEnumerable<IELChak.Models.Usuario>
 
 @{
     ViewData["Title"] = "Usuarios";
@@ -16,6 +16,9 @@
                     Usuario
                 </th>
                 <th>
+                    Rol
+                </th>
+                <th>
                     Email
                 </th>
                 <th>
@@ -30,6 +33,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)

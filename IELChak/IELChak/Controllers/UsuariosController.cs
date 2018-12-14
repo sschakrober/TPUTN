@@ -7,22 +7,50 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IELChak.Data;
 using IELChak.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace IELChak.Controllers
 {
     public class UsuariosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        UserManager<ApplicationUser> _userManager;
+        RoleManager<IdentityRole> _roleManager;
+        UsuarioRole _usuarioRole;
 
-        public UsuariosController(ApplicationDbContext context)
+        public List<SelectListItem> usuarioRole;
+
+        public UsuariosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _usuarioRole = new UsuarioRole();
+            usuarioRole = new List<SelectListItem>();
         }
 
         // GET: Usuarios
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ApplicationUser.ToListAsync());
+            var ID = "";
+            List<Usuario> usuario = new List<Usuario>();
+            var appUsuario = await _context.ApplicationUser.ToListAsync();
+            foreach(var Data in appUsuario)
+            {
+                ID = Data.Id;
+                usuarioRole = await _usuarioRole.GetRole(_userManager, _roleManager, ID);
+
+                usuario.Add(new Usuario()
+                {
+                    Id = Data.Id,
+                    UserName = Data.UserName,
+                    PhoneNumber = Data.PhoneNumber,
+                    Email = Data.Email,
+                    Role = usuarioRole[0].Text
+                });
+            }
+
+            return View(usuario.ToList());
         }
 
         public async Task<List<ApplicationUser>> GetUsuario(string id)
