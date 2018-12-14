@@ -12,15 +12,15 @@
 <table class="table">
     <thead>
         <tr>
-            <th>
-                Usuario
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Telefono
-            </th>
+                <th>
+                    Usuario
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Telefono
+                </th>
             <th></th>
         </tr>
     </thead>
@@ -38,7 +38,7 @@
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
                 <td>
-                    <a class="btn btn-success" data-toggle="modal" data-target="#modalEditar" onclick="getUsuario('@item.Id','Usuarios/GetUsuario">Editar</a> |
+                    <a class="btn btn-success" data-toggle="modal" data-target="#modalEditar" onclick="getUsuario('@item.Id','Usuarios/GetUsuario')">Editar</a> |
                     <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Detalle</a> |
                     <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Eliminar</a>
                 </td>
@@ -57,7 +57,7 @@
             <div class="modal-body">
                 <form>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" name="Id" id="id" />
+                    <input type="hidden" name="Id" id="Id" />
                     <div class="form-group">
                         <label for="UserName" class="control-label">Usuario</label>
                         <input readonly name="UserName" id="UserName" class="form-control" />
@@ -74,7 +74,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Guardar Cambios</button>
+                <button type="button" class="btn btn-primary" onclick="editarUsuario('Usuarios/EditUsuario')">Guardar Cambios</button>
             </div>
         </div>
     </div>
