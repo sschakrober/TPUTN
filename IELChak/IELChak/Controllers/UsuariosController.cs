@@ -53,13 +53,44 @@ namespace IELChak.Controllers
             return View(usuario.ToList());
         }
 
-        public async Task<List<ApplicationUser>> GetUsuario(string id)
+        public async Task<List<Usuario>> GetUsuario(string id)
         {
-            List<ApplicationUser> usuario = new List<ApplicationUser>();
+            List<Usuario> usuario = new List<Usuario>();
             var appUsuario = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
-            usuario.Add(appUsuario);
+            usuarioRole = await _usuarioRole.GetRole(_userManager, _roleManager, id);
+
+            usuario.Add(new Usuario()
+            {
+                Id = appUsuario.Id,
+                UserName = appUsuario.UserName,
+                PhoneNumber = appUsuario.PhoneNumber,
+                Email = appUsuario.Email,
+                Role = usuarioRole[0].Text,
+                RoleId = usuarioRole[0].Value,
+                AccessFailedCount = appUsuario.AccessFailedCount,
+                ConcurrencyStamp = appUsuario.ConcurrencyStamp,
+                EmailConfirmed = appUsuario.EmailConfirmed,
+                LockoutEnabled = appUsuario.LockoutEnabled,
+                LockoutEnd = appUsuario.LockoutEnd,
+                NormalizedEmail = appUsuario.NormalizedEmail,
+                NormalizedUserName = appUsuario.NormalizedUserName,
+                PasswordHash = appUsuario.PasswordHash,
+                PhoneNumberConfirmed = appUsuario.PhoneNumberConfirmed,
+                SecurityStamp = appUsuario.SecurityStamp,
+                TwoFactorEnabled = appUsuario.TwoFactorEnabled,
+            });
+
             return usuario;
         }
+
+        public async Task<List<SelectListItem>> GetRoles()
+        {
+            List<SelectListItem> rolesLista = new List<SelectListItem>();
+            rolesLista = _usuarioRole.Roles(_roleManager);
+
+            return rolesLista;
+        }
+
         public async Task<string> EditUsuario(string id, string userName, string email, string phoneNumber, int accessFailedCount, string concurrerncyStamp, bool emailConfirmed, bool lockoutEnabled, DateTimeOffset
             lockoutEnd, string normalizedEmail, string normalizedUsedName, string passwordHash, bool phoneNumberConfirmed, string securityStamp, bool twoFactorEnabled, ApplicationUser applicationUser)
         {
