@@ -92,7 +92,7 @@ namespace IELChak.Controllers
         }
 
         public async Task<string> EditUsuario(string id, string userName, string email, string phoneNumber, int accessFailedCount, string concurrerncyStamp, bool emailConfirmed, bool lockoutEnabled, DateTimeOffset
-            lockoutEnd, string normalizedEmail, string normalizedUsedName, string passwordHash, bool phoneNumberConfirmed, string securityStamp, bool twoFactorEnabled, ApplicationUser applicationUser)
+            lockoutEnd, string normalizedEmail, string normalizedUsedName, string passwordHash, bool phoneNumberConfirmed, string securityStamp, bool twoFactorEnabled, string selectRole, ApplicationUser applicationUser)
         {
             var resp = "";
             try
@@ -118,6 +118,19 @@ namespace IELChak.Controllers
 
                 _context.Update(applicationUser);
                 await _context.SaveChangesAsync();
+                var usuario = await _userManager.FindByIdAsync(id);
+                usuarioRole = await _usuarioRole.GetRole(_userManager, _roleManager, id);
+
+                if(usuarioRole[0].Text != "No Role")
+                {
+                    await _userManager.RemoveFromRoleAsync(usuario, usuarioRole[0].Text);
+                }
+                if(selectRole == "No Role")
+                {
+                    selectRole = "Usuario";
+                }
+                var resultado = await _userManager.AddToRoleAsync(usuario, selectRole);
+
                 resp = "Save";
             }
             catch

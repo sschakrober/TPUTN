@@ -21,6 +21,8 @@ var id;
 var userName;
 var email;
 var phoneNumber;
+var role;
+var selectRole;
 var accessFailedCount;
 var concurrencyStamp;
 var emailConfirmed;
@@ -48,6 +50,11 @@ function mostrarUsuario(response) {
         $('input[name=Email]').val(val.email);
         $('input[name=PhoneNumber]').val(val.phoneNumber);
         document.getElementById('Select').options[0] = new Option(val.role, val.roleId);
+
+        $("#dEmail").text(val.email);
+        $("#dUserName").text(val.userName);
+        $("#dPhoneNumber").text(val.phoneNumber);
+        $("#dRole").text(val.role);
     });
 }
 
@@ -57,7 +64,7 @@ function getRoles(action) {
         url: action,
         data: {},
         success: function (response) {
-            if (j == 0) {
+            if (j==0) {
                 for (var i = 0; i < response.length; i++) {
                     document.getElementById('Select').options[i] = new Option(response[i].text, response[i].value);
                 }
@@ -72,6 +79,8 @@ function editarUsuario(action) {
     id = $('input[name = Id]')[0].value;
     email = $('input[name = Email]')[0].value;
     phoneNumber = $('input[name = PhoneNumber]')[0].value;
+    role = document.getElementById('Select');
+    selectRole = role.options[role.selectIndex].text;
 
     $.each(items, function (index, val) {
         accessFailedCount = val.accessFailedCount;
@@ -92,7 +101,7 @@ function editarUsuario(action) {
         type: "POST",
         url: action,
         data: {
-            id, userName, phoneNumber, accessFailedCount, concurrencyStamp, emailConfirmed, lockoutEnabled, lockoutEnd, normalizedEmail, normalizedUserName, passwordHash, phoneNumberConfirmed, securityStamp, twoFactorEnabled
+            id, userName, phoneNumber, accessFailedCount, concurrencyStamp, emailConfirmed, lockoutEnabled, lockoutEnd, normalizedEmail, normalizedUserName, passwordHash, phoneNumberConfirmed, securityStamp, twoFactorEnabled, selectRole
         },
 
         success: function (response) {
@@ -105,3 +114,9 @@ function editarUsuario(action) {
         }
     });
 }
+
+function ocultarDetalleUsuario() {
+    $("#modalDetalle").modal("hide");
+}
+
+
