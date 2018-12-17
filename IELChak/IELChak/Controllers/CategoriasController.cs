@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using IELChak.Data;
 using IELChak.Models;
+using IELChak.ModelsClass;
+using Microsoft.AspNetCore.Identity;
 
 namespace IELChak.Controllers
 {
     public class CategoriasController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private CategoriaModels categoriaModels;
 
         public CategoriasController(ApplicationDbContext context)
         {
             _context = context;
+            categoriaModels = new CategoriaModels(_context);
         }
 
         // GET: Categorias
@@ -43,27 +47,12 @@ namespace IELChak.Controllers
             return View(categoria);
         }
 
-        // GET: Categorias/Create
-        public IActionResult Create()
+        public List<IdentityError> guardarCategoria(string nombre, string descripcion, string estado)
         {
-            return View();
+            return categoriaModels.guardarCategoria(nombre, descripcion, estado);
         }
 
-        // POST: Categorias/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoriaID,Nombre,Descripcion,Estado")] Categoria categoria)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(categoria);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(categoria);
-        }
+        
 
         // GET: Categorias/Edit/5
         public async Task<IActionResult> Edit(int? id)

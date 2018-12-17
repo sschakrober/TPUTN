@@ -19,7 +19,7 @@ class Categorias {
                     document.getElementById("mensaje").innerHTML = "Seleccione un estado";
                 }
                 else {
-                    alert(this.nombre);
+                    
                     var nombre = this.nombre;
                     var descripcion = this.descripcion;
                     var estado = this.estado;
@@ -32,21 +32,53 @@ class Categorias {
                             nombre, descripcion, estado
                         },
                         success: (response) => {
-
+                            $.each(response, (index, val) => {
+                                mensaje = val.code;
+                            });
+                            if (mensaje === "Save") {
+                                this.restablecer();
+                            }
+                            else {
+                                document.getElementById("mensaje").innerHTML = "No se puede guardar la categoria";
+                            }
+                            //console.log(response);
                         }
                     });
                 }
             }
         }
     }
+    filtradoDatos(numPagina) {
+        var valor = this.nombre;
+        var action = this.action;
+        if (valor == "") {
+            valor = "null";
+        }
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: { valor, numPagina },
+            success: (response) => {
+                console.log(response);
+                $.each(response, (index, val) => {
+                    $("#resultSearch").html(val[0]);
+                    $("#paginado").html(val[1]);
+                });
+            }
+        });
+    }
+
+    restablecer() {
+        document.getElementById("Nombre").value = "";
+        document.getElementById("Descripcion").value = "";
+        document.getElementById("mensaje").innerHTML = "";
+        document.getElementById("Estado").selectedIndex = 0;
+        $('#modalAC').modal('hide');
+    }
 }
 
-var agregarCategoria = () => {
-    var nombre = document.getElementById("Nombre").value;
-    var descripcion = document.getElementById("Descripcion").value;
-    var estados = document.getElementById('Estado');
-    var estado = estados.options[estados.selectedIndex].value;
-    var action = 'Categorias/guardarCategoria';
-    var categoria = new Categorias(nombre, descripcion, estado, action);
-    categoria.agregarCategoria();
-}
+
+    
+    
+    
+
