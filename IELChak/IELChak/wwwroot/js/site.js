@@ -3,6 +3,10 @@ $('#modalEditar').on('shown.bs.modal', function () {
     $('#myInput').focus()
 })
 
+$('#modalAC').on('shown.bs.modal', function () {
+    $('#Nombre').focus()
+})
+
 function getUsuario(id, action) {
     $.ajax({
         type: "POST",
@@ -80,9 +84,9 @@ function getRoles(action) {
 }
 
 function editarUsuario(action) {
-    id = $('input[name = Id]')[0].value;
-    email = $('input[name = Email]')[0].value;
-    phoneNumber = $('input[name = PhoneNumber]')[0].value;
+    id = $('input[name=Id]')[0].value;
+    email = $('input[name=Email]')[0].value;
+    phoneNumber = $('input[name=PhoneNumber]')[0].value;
     role = document.getElementById('Select');
     selectRole = role.options[role.selectIndex].text;
 
@@ -105,11 +109,11 @@ function editarUsuario(action) {
         type: "POST",
         url: action,
         data: {
-            id, userName, phoneNumber, accessFailedCount, concurrencyStamp, emailConfirmed, lockoutEnabled, lockoutEnd, normalizedEmail, normalizedUserName, passwordHash, phoneNumberConfirmed, securityStamp, twoFactorEnabled, selectRole
+            id, userName, email, phoneNumber, accessFailedCount, concurrencyStamp, emailConfirmed, lockoutEnabled, lockoutEnd, normalizedEmail, normalizedUserName, passwordHash, phoneNumberConfirmed, securityStamp, twoFactorEnabled, selectRole
         },
 
         success: function (response) {
-            if (response == "Save") {
+            if (response === "Save") {
                 window.location.href = "Usuarios";
             }
             else {

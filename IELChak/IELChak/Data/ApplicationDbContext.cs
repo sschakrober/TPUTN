@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,5 +24,9 @@ namespace IELChak.Data
         }
 
         public DbSet<IELChak.Models.ApplicationUser> ApplicationUser { get; set; }
+
+        public DbSet<IELChak.Models.Categoria> Categoria { get; set; }
+
+        public DbSet<IELChak.Models.Curso> Curso { get; set; }
     }
 }
