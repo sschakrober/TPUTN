@@ -141,6 +141,25 @@ namespace IELChak.Controllers
             return resp;
         }
 
+        public async Task<String> DeleteUsuario(string id)
+        {
+            var resp = "";
+            try
+            {
+                var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
+                _context.ApplicationUser.Remove(applicationUser);
+                await _context.SaveChangesAsync();
+                resp = "Delete";
+            }
+
+            catch
+            {
+                resp = "NoDelete";
+            }
+
+            return resp;
+        }
+
         private bool ApplicationUserExists(string id)
         {
             return _context.ApplicationUser.Any(e => e.Id == id);

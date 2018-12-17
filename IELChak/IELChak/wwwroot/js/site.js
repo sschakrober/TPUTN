@@ -55,6 +55,9 @@ function mostrarUsuario(response) {
         $("#dUserName").text(val.userName);
         $("#dPhoneNumber").text(val.phoneNumber);
         $("#dRole").text(val.role);
+
+        $("#eUsuario").text(val.email);
+        $('input[name=EIdUsuario]').val(val.id);
     });
 }
 
@@ -119,4 +122,20 @@ function ocultarDetalleUsuario() {
     $("#modalDetalle").modal("hide");
 }
 
+function eliminarUsuario(action) {
+    var id = $('input[name=EIdUsuario]')[0].value;
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: { id },
+        success: function (response) {
+            if (response === "Delete") {
+                window.location.href = "Usuarios";
+            }
+            else {
+                alert("No se puede eliminar");
+            }
+        }
+    });
+}
 
