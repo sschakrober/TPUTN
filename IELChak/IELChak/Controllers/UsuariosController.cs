@@ -160,6 +160,30 @@ namespace IELChak.Controllers
             return resp;
         }
 
+        public async Task<String> CreateUsuario(string email, string phoneNumber, string passwordHash, string selectRole, ApplicationUser applicationUser)
+        {
+            var resp = "";
+            applicationUser = new ApplicationUser
+            {
+                UserName = email,
+                Email = email,
+                PhoneNumber = phoneNumber
+            };
+            var result = await _userManager.CreateAsync(applicationUser, passwordHash);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(applicationUser, selectRole);
+                resp = "Save";
+            }
+            else
+            {
+                resp = "NoSave";
+            }
+            return resp;
+
+            
+        }
+
         private bool ApplicationUserExists(string id)
         {
             return _context.ApplicationUser.Any(e => e.Id == id);

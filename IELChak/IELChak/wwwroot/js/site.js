@@ -70,6 +70,7 @@ function getRoles(action) {
             if (j==0) {
                 for (var i = 0; i < response.length; i++) {
                     document.getElementById('Select').options[i] = new Option(response[i].text, response[i].value);
+                    document.getElementById('SelectNuevo').options[i] = new Option(response[i].text, response[i].value);
                 }
 
                 j = 1;
@@ -137,5 +138,42 @@ function eliminarUsuario(action) {
             }
         }
     });
+}
+
+function crearUsuario(action) {
+    email = $('input[name=EmailNuevo]')[0].value;
+    phoneNumber = $('input[name=PhoneNumberNuevo]')[0].value;
+    passwordHash = $('input[name=PasswordHashNuevo]')[0].value;
+    role = document.getElementById('SelectNuevo');
+    selectRole = role.options[role.selectedIndex].text;
+    respuesta = "";
+    if (email == "") {
+        $('#Email').focus();
+        alert("Ingrese el email del usuario");
+    }
+    else {
+        if (passwordHash == "") {
+            $('#PasswordHash').focus();
+            alert("Ingrese el Password del usuario");
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: action,
+                data: {
+                    email, phoneNumber, passwordHash, selectRole
+                },
+                success: function (response) {
+                    if (response === "Save") {
+                        window.location.href = "Usuarios";
+                    }
+                    else {
+                        $('#mensajeNuevo').html("No se puede guardar el usuario. < br /> Seleccione un rol. < br /> Ingrese un email correcto. < br /> El password debe tener de 6 - 100 caracteres, al menos un caracter especial, una letra mayúscula y un número");
+                            
+                    }
+                }
+            });
+        }
+    }
 }
 
