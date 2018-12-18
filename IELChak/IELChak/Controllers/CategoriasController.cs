@@ -29,6 +29,16 @@ namespace IELChak.Controllers
             return View(await _context.Categoria.ToListAsync());
         }
 
+        public List<object[]> filtrarDatos(int numPagina, string valor)
+        {
+            return categoriaModels.filtrarDatos(numPagina, valor);
+        }
+
+        public List<Categoria> getCategorias(int id)
+        {
+            return categoriaModels.getCategorias(id);
+        }
+
         // GET: Categorias/Details/5
         public async Task<IActionResult> Details(int? id)
         {

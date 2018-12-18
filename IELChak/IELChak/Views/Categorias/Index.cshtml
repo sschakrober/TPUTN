@@ -14,7 +14,7 @@
         <input id ="filtrar" name="filtrar" placeholder="Buscar" onKeyUp="filtrarDatos(1);"class="form-control"/>
     </div>
 </div>
-<table class="table">
+@*<table class="table">
     <thead>
         <tr>
                 <th>
@@ -49,7 +49,29 @@
         </tr>
 }
     </tbody>
+</table>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Descripcion
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                Opciones
+            </th>
+        </tr>
+    </thead>
+    <tbody id="resultSearch"></tbody>
 </table>
+<div id="paginado">
+
+</div>
 <div class="modal fade" id="modalAC" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -82,7 +104,7 @@
                                 </select>
                             </div>
                         </div>
-                        <label id ="mensaje" class="col-md-2 control-label"></label>
+                        <label id="mensaje" class="col-md-2 control-label"></label>
                     </div>
                 </form>
             </div>

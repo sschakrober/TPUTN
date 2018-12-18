@@ -1,4 +1,5 @@
 ﻿
+var localStorage = window.localStorage;
 class Categorias {
     constructor(nombre, descripcion, estado, action) {
         this.nombre = nombre;
@@ -64,6 +65,19 @@ class Categorias {
                     $("#resultSearch").html(val[0]);
                     $("#paginado").html(val[1]);
                 });
+            }
+        });
+    }
+
+    qetCategoria(id) {
+        var action = this.action;
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: { id },
+            success: (response) => {
+                console.log(response);
+                localStorage.setItem("categoria", JSON.stringify(response));
             }
         });
     }

@@ -1,11 +1,11 @@
 ﻿// Write your JavaScript code.
 $('#modalEditar').on('shown.bs.modal', function () {
     $('#myInput').focus()
-})
+});
 
 $('#modalAC').on('shown.bs.modal', function () {
     $('#Nombre').focus()
-})
+});
 
 function getUsuario(id, action) {
     $.ajax({
@@ -181,6 +181,13 @@ function crearUsuario(action) {
     }
 }
 
+$().ready(() => {
+    document.getElementById("filtrar").focus();
+    filtrarDatos(1);
+});
+
+var idCategoria;
+
 var agregarCategoria = () => {
     var nombre = document.getElementById("Nombre").value;
     var descripcion = document.getElementById("Descripcion").value;
@@ -194,7 +201,14 @@ var agregarCategoria = () => {
 var filtrarDatos = (numPagina) => {
     var valor = document.getElementById("filtrar").value;
     var action = 'Categorias/filtrarDatos';
-    var categoria = newCategorias(valor, "", "", action);
+    var categoria = new Categorias(valor, "", "", action);
     categoria.filtrarDatos(numPagina);
+}
+
+var editarEstado = (id) => {
+    idCategoria = id;
+    var action = 'Categorias/getCategorias';
+    var categoria = new Categorias("", "", "", action);
+    categoria.qetCategoria(id);
 }
 
