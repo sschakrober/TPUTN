@@ -186,6 +186,9 @@ $().ready(() => {
     filtrarDatos(1,"nombre");
 });
 
+$('#modalCS').on('shown.bs.modal', () => {
+    $('#Nombre').focus();
+});
 var idCategoria;
 var funcion = 0;
 

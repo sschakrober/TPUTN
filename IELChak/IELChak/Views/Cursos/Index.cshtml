@@ -11,24 +11,24 @@
 </p>
 <div class="form-group">
     <div class="col-md-6">
-        <input id="filtrar" name="filtrar" placeholder="Buscar" onkeyup="filtrarDatos(1);" class="form-control" /> 
+        <input id="filtrar" name="filtrar" placeholder="Buscar" onkeyup="filtrarDatos(1);" class="form-control" />
     </div>
 </div>
 <table class="table">
     <thead>
         <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Descripcion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Horas)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Estado)
-                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Horas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Categoria)
             </th>
@@ -36,29 +36,99 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Horas)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categoria.CategoriaID)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CursoID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CursoID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CursoID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Horas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria.CategoriaID)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.CursoID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CursoID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CursoID">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+<div class="modal fade" id="modalCS" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Agregar Curso</h4>
+            </div>
+            <div class="modal-body">
+                <form asp-action="">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="Nombre" class="col-md-2 control-label">Nombre</label>
+                            <div class="col-md-10">
+                                <input for="Nombre" id="Nombre" placeholder="Nombre" name="Nombre" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Descripcion" class="col-md-2 control-label">Descripcion</label>
+                            <div class="col-md-10">
+                                <input for="Descripcion" id="Descripcion" placeholder="Descripcion" name="Descripcion" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Creditos" class="col-md-2 control-label">Creditos</label>
+                            <div class="col-md-10">
+                                <input for="Creditos" id="Creditos" placeholder="Creditos" name="Creditos" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Horas" class="col-md-2 control-label">Horas</label>
+                            <div class="col-md-10">
+                                <input for="Horas" id="Horas" placeholder="Horas" name="Horas" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Costo" class="col-md-2 control-label">Costo</label>
+                            <div class="col-md-10">
+                                <input for="Costo" id="Costo" placeholder="Costo" name="Costo" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="Estado" class="col-md-2 control-label">Estado</label>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" for="Estado" id="Estado" name="Estado" />
+                                </label>
+                            </div>
+                        <div class="form-group">
+                            <label for="Categoria" class="col-md-2 control-label">Categoria</label>
+                            <div class="col-md-10">
+                                <select id='CategoriaCursos' class="form-control">
+                                    <option value='0'>Seleccione un curso</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                    <label id="mensaje" class="col-md-2 control-label"></label>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" onclick="agregarCurso()" class="btn btn-primary">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
