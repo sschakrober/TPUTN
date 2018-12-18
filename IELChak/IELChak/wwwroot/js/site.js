@@ -187,7 +187,7 @@ $().ready(() => {
 });
 
 var idCategoria;
-var funcion;
+var funcion = 0;
 
 var agregarCategoria = () => {
     var nombre = document.getElementById("Nombre").value;
