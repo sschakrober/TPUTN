@@ -183,7 +183,7 @@ function crearUsuario(action) {
 
 $().ready(() => {
     document.getElementById("filtrar").focus();
-    filtrarDatos(1);
+    filtrarDatos(1,"nombre");
 });
 
 var idCategoria;
@@ -204,11 +204,11 @@ var agregarCategoria = () => {
     categoria.agregarCategoria(idCategoria, funcion);
 }
 
-var filtrarDatos = (numPagina) => {
+var filtrarDatos = (numPagina, order) => {
     var valor = document.getElementById("filtrar").value;
     var action = 'Categorias/filtrarDatos';
     var categoria = new Categorias(valor, "", "", action);
-    categoria.filtrarDatos(numPagina);
+    categoria.filtrarDatos(numPagina, order);
 }
 
 var editarEstado = (id, fun) => {
@@ -222,6 +222,6 @@ var editarEstado = (id, fun) => {
 var editarCategoria = () => {
     var action = 'Categorias/editarCategoria';
     var categoria = new Categorias("", "", "", action);
-    categoria.editarCategoria(idCategoria, "estado");
+    categoria.editarCategoria(idCategoria, funcion);
 }
 

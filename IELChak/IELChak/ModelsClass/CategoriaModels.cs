@@ -41,7 +41,7 @@ namespace IELChak.ModelsClass
 
         public List<object[]> filtrarDatos(int numPagina, string valor, string order)
         {
-            int count = 0, cant, numRegistros = 0, inicio = 0, reg_por_pagina = 2;
+            int count = 0, cant, numRegistros = 0, inicio = 0, reg_por_pagina = 10;
             int can_paginas, pagina;
             string dataFilter = "", paginador = "", Estado = null;
             List<object[]> data = new List<object[]>();
@@ -61,6 +61,10 @@ namespace IELChak.ModelsClass
             }
             
             numRegistros = categorias.Count;
+            if ((numRegistros % reg_por_pagina) > 0)
+            {
+                numRegistros += 1;
+            }
             inicio = (numPagina - 1) * reg_por_pagina;
             can_paginas = (numRegistros / reg_por_pagina);
             if(valor == "null")

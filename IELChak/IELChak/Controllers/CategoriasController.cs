@@ -29,9 +29,9 @@ namespace IELChak.Controllers
             return View();
         }
 
-        public List<object[]> filtrarDatos(int numPagina, string valor)
+        public List<object[]> filtrarDatos(int numPagina, string valor, string order)
         {
-            return categoriaModels.filtrarDatos(numPagina, valor);
+            return categoriaModels.filtrarDatos(numPagina, valor, order);
         }
 
         public List<Categoria> getCategorias(int id)

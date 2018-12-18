@@ -49,7 +49,7 @@ class Categorias {
             }
         }
     }
-    filtradoDatos(numPagina) {
+    filtradoDatos(numPagina, order) {
         var valor = this.nombre;
         var action = this.action;
         if (valor == "") {
@@ -58,7 +58,7 @@ class Categorias {
         $.ajax({
             type: "POST",
             url: action,
-            data: { valor, numPagina },
+            data: { valor, numPagina, order },
             success: (response) => {
                 console.log(response);
                 $.each(response, (index, val) => {
@@ -123,7 +123,7 @@ class Categorias {
         document.getElementById("Estado").selectedIndex = 0;
         $('#modalAC').modal('hide');
         $('#ModaEstado').modal('hide');
-        filtrarDatos(1)
+        filtrarDatos(1,"nombre")
     }
 }
 
