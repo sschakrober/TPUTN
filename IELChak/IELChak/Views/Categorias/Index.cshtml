@@ -1,66 +1,28 @@
-﻿@model IEnumerable<IELChak.Models.Categoria>
-
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Categorias";
 }
 
 <h2>Index</h2>
 
 <p>
-    <a data-toggle='modal' data-target='#modalAC'class='btn btn-info'>Crear categoria</a>
+    <a data-toggle='modal' data-target='#modalAC' class='btn btn-info'>Crear categoria</a>
 </p>
 <div class="form-group">
-    <div class="col-md-6">
-        <input id ="filtrar" name="filtrar" placeholder="Buscar" onKeyUp="filtrarDatos(1);"class="form-control"/>
+    <div class="col-md-10">
+        <input id="filtrar" name="filtrar" placeholder="Buscar" onKeyUp="filtrarDatos(1);" class="form-control" />
     </div>
 </div>
-@*<table class="table">
-    <thead>
-        <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Descripcion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Estado)
-                </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Estado)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CategoriaID">Editar</a> |
-                <a asp-action="Details" asp-route-id="@item.CategoriaID">Detalle</a> |
-                <a asp-action="Delete" asp-route-id="@item.CategoriaID">Eliminar</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>*@
 <table class="table">
     <thead>
         <tr>
             <th>
-                Nombre
+                <a href="#" onclick='filtrarDatos'(1,"nombre")'>Nombre</a>
             </th>
             <th>
-                Descripcion
+                <a href="#" onclick='filtrarDatos'(1,"des")'>Descripcion</a>
             </th>
             <th>
-                Estado
+                <a href="#" onclick='filtrarDatos'(1,"estado")'>Estado</a>
             </th>
             <th>
                 Opciones
@@ -110,8 +72,24 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type ="button" onclick="agregarCategoria()" class="btn btn-primary">Guardar</button>
+                <button type="button" onclick="agregarCategoria()" class="btn btn-primary">Guardar</button>
             </div>
-       </div>
-   </div>
+        </div>
+    </div>
 </div>
+<div class="modal fade" id="ModaEstado" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="titleCategoria" class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close></button>
+                <button type="button" onclick="editarCategoria()" class="btn btn-primary">Aceptar></button>
+            </div>
+        </div><!--/.modal-content -->
+    </div><!--/.modal-dialog -->
+</div><!--/.modal -->
